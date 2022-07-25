@@ -3,6 +3,39 @@ body {
     margin: 0;
 }
 
+/*  */
+
+.score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.score-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 40px;
+    gap: 25px;
+    width: 250px;
+    height: 225px;
+
+    border-style: solid;
+    border-radius: 4px;
+}
+
+#status {
+    padding-top: 30px;
+}
+
+/*  */
+
+.choices {
+    padding-top: 40px;
+}
+
 .boxes {
     display: flex;
     align-items: center;
