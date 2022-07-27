@@ -7,7 +7,7 @@ const playerScore = document.getElementById("player-score").querySelector('h2');
 const computerScore = document.getElementById("computer-score").querySelector('h2');
 const outcome = document.getElementById("status").querySelector('h2');
 
-const score = [0, 0];
+let score = [0, 0];
 
 
 // Generate random int for 
@@ -22,60 +22,100 @@ function getComputerChoice() {
     return choices[i];
 }
 
+function win() {
+    outcome.innerHTML = "Player wins";
+    score[0]++;
+    playerScore.innerHTML = score[0];
+}
+
+function lose() {
+    outcome.innerHTML = "Computer Wins";
+    score[1]++;
+    computerScore.innerHTML = score[1];
+}
+
+function resetGame() {
+    score = [0, 0];
+    playerScore.innerHTML = score[0];
+    computerScore.innerHTML = score[1];
+}
+
+function endGame() {
+    if (score[0] == 3) {
+        outcome.innerHTML = "Player has won the match."
+        resetGame();
+    }
+
+    if (score[1] == 3) {
+        outcome.innerHTML = "Computer has won the match."
+        resetGame();
+    }
+}
+
 // Plays the game, accepts player's choice as parameter
 function play(playerChoice) {
     const computerChoice = getComputerChoice();
     console.log("Computer: " + computerChoice + '\n' + "---");
 
     if (playerChoice === computerChoice) { // Edge case, prevents entering pointless checking if it's a tie.
-        console.log("Tie");
-        outcome.innerHTML = "Tie";
-        return;
+        if (score[0] == 3 || score[1] == 3) {
+            endGame();
+        } else {
+            outcome.innerHTML = "Tie";
+        }
     } 
 
     switch(playerChoice) {
         case "Rock":
-            if (computerChoice === "Paper") {
-                outcome.innerHTML = "Player wins";
-                score[0]++;
-                playerScore.innerHTML = score[0];
+            if (score[0] == 3 || score[1] == 3) {
+                endGame();
                 break;
+            } else {
+                if (computerChoice === "Paper") {
+                    win();
+                    break;
+                }
+    
+                if (computerChoice === "Scissors") {
+                    lose();
+                    break;
+                }
             }
+            break;
 
-            if (computerChoice === "Scissors") {
-                outcome.innerHTML = "Computer Wins";
-                score[1]++;
-                computerScore.innerHTML = score[1];
-                break;
-            }
         case "Paper":
-            if (computerChoice === "Rock") {
-                outcome.innerHTML = "Player wins";
-                score[0]++;
-                playerScore.innerHTML = score[0];
+            if (score[0] == 3 || score[1] == 3) {
+                endGame();
                 break;
+            } else {
+                if (computerChoice === "Rock") {
+                    win();
+                    break;
+                }
+    
+                if (computerChoice === "Scissors") {
+                    lose();
+                    break;
+                }
             }
+            break;
 
-            if (computerChoice === "Scissors") {
-                outcome.innerHTML = "Computer wins";
-                score[1]++;
-                computerScore.innerHTML = score[1];
-                break;
-            }
         case "Scissors":
-            if (computerChoice === "Paper") {
-                outcome.innerHTML = "Player wins";
-                score[0]++;
-                playerScore.innerHTML = score[0];
+            if (score[0] == 3 || computerChoice == 3) {
+                endGame();
                 break;
+            } else {
+                if (computerChoice === "Paper") {
+                    win();
+                    break;
+                }
+    
+                if (computerChoice === "Rock") {
+                    lose();
+                    break;
+                }
             }
-
-            if (computerChoice === "Rock") {
-                outcome.innerHTML = "Computer wins"
-                score[1]++;
-                computerScore.innerHTML = score[1];
-                break;
-            }
+            break;
     }
 }
 
